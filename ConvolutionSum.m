@@ -1,29 +1,44 @@
-clear;
 clc;
+clear all;
+close all;
 
-x = [3, 2, 1, 2];
-h = [1, 2, 1, 2];
-y = zeros(1, length(x)+length(h)-1);
-for i = 1:length(x)
-    for j = 1:length(h)
-        m(i,j) = x(i)*h(j);
-        y(i+j-1) = y(i+j-1) + m(i,j);
-    end
-end
-y
-
-subplot(2,2,1);
-stem(x,h,'LineWidth',3);
-axis([0 5 0 5])
-
-subplot(2,2,2);
-stem(x,flip(h), 'LineWidth',3);
-axis([0 5 0 5])
-
-subplot(2,2,3);
-stem(h,x,'LineWidth',3);
-axis([0 5 0 5])
-
-subplot(2,2,4);
-stem(flip(h),x, 'LineWidth',3);
-axis([0 5 0 5])
+x = input('Enter values of x(n): ');
+zerox = input('Zero Position of x: ');
+h = input('Enter values of h(n): ');
+zeroh = input('Zero Position of h: ');
+k1 = -(length(h)-1);
+k2 = length(x)+length(h)-1;
+kstart = 1;
+kend = k2 - k1 + 1;
+xk = zeros(kstart,kend);
+hk = zeros(kstart,kend);
+for i=1:length(x)
+  xk(-k1+i-zerox+1) = x(i);
+endfor
+h = flip(h);
+for i=1:length(h)
+  hk(i+zeroh-1) = h(i);
+endfor
+shift = 0;
+for j=1:k2-zeroh+1+1
+  X(shift+1) = 0;
+  for i=1:length(h)+zeroh-1
+    X(shift+1) = X(shift+1) + hk(i)*xk(i+shift);
+  endfor
+  shift = shift+1;
+endfor
+disp('Value of x(k): ');
+disp(xk);
+disp('Value of h(-k): ');
+disp(hk);
+disp('Convolution Sum: ');
+disp(X);
+subplot(3,1,1);
+stem(1:length(xk),xk);
+title('x(n)');
+subplot(3,1,2);
+stem(1:length(hk),hk);
+title('h(n)');
+subplot(3,1,3);
+stem(1:length(X),X);
+title('X(m)');
