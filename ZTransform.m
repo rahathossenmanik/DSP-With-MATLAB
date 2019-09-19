@@ -1,11 +1,15 @@
 clc;
-clear;
+clear all;
+close all;
 
-x = [1, 3, 5, 7, 9];
-b = 0;
-n = length(x);
-y = sym('z');
-for i = 1:n
-    b = b+x(i)*y^(1-i);
-end
-disp(b)
+sym 'z';
+x = input('Enter the sequence x(n): ');
+n1 = input('Enter the start value of n: ');
+n2 = n1+length(x)-1;
+m = 1;
+result = 0;
+for i=n1:n2
+  result = result + x(m)*(z^(-i));
+  m = m + 1;
+endfor
+disp(result);
